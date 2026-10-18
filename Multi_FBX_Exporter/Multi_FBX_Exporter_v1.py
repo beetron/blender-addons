@@ -196,7 +196,10 @@ class VIEW3D_PT_MultiFbxExporterPanel(bpy.types.Panel):
         column = header_box.column(align=True)
         column.label(text=f"Multi Fbx Exporter (v.{ADDON_VERSION})", icon='EXPORT')
         column.label(text="by Lazy Onigiri / bTro", icon='USER')
-        header_box.operator("wm.url_open", text="GitHub", icon='URL').url = GITHUB_URL
+        # Left-aligned row so the button only takes the width of its icon and text
+        link_row = header_box.row()
+        link_row.alignment = 'LEFT'
+        link_row.operator("wm.url_open", text="GitHub", icon='URL').url = GITHUB_URL
 
         # Properties interface
         main_column = layout.column(align=True)
