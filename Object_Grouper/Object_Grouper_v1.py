@@ -1,9 +1,9 @@
 bl_info = {
     "name": "Object Grouper",
     "author": "Lazy Onigiri / bTro",
-    "version": (1, 0, 1),
+    "version": (1, 0, 2),
     "blender": (4, 5, 0),
-    "location": "View3D > Sidebar > FBX",
+    "location": "View3D > Sidebar > Lazy Onigiri",
     "description": "Save named lists of objects and select them in one click. The last object in a list becomes the active object.",
     "warning": "",
     "category": "Object",
@@ -12,6 +12,7 @@ bl_info = {
 import bpy
 
 ADDON_VERSION = ".".join(str(number) for number in bl_info["version"])
+GITHUB_URL = "https://github.com/beetron/blender-addons"
 
 OBJECT_TYPE_ICONS = {
     'MESH': 'OUTLINER_OB_MESH',
@@ -319,7 +320,10 @@ class OBJECTGROUPER_UL_Groups(bpy.types.UIList):
     def draw_item(self, context, layout, data, item, icon, active_data, active_propname, index):
         row = layout.row(align=True)
         row.prop(item, "name", text="", emboss=False, icon='OUTLINER_COLLECTION')
-        row.label(text=str(len(item.items)))
+        # Right-aligned so the count only takes the space it needs and the name gets the rest
+        count = row.row(align=True)
+        count.alignment = 'RIGHT'
+        count.label(text=str(len(item.items)))
         op = row.operator("object_grouper.select_group", text="", icon='RESTRICT_SELECT_OFF', emboss=False)
         op.index = index
 
@@ -341,7 +345,7 @@ class OBJECTGROUPER_UL_Items(bpy.types.UIList):
 class VIEW3D_PT_ObjectGrouperPanel(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'FBX'
+    bl_category = 'Lazy Onigiri'
     bl_label = "Object Grouper"
     bl_order = 1
 
@@ -353,6 +357,7 @@ class VIEW3D_PT_ObjectGrouperPanel(bpy.types.Panel):
         column = header_box.column(align=True)
         column.label(text=f"Object Grouper (v.{ADDON_VERSION})", icon='GROUP')
         column.label(text="by Lazy Onigiri / bTro", icon='USER')
+        header_box.operator("wm.url_open", text="GitHub", icon='URL').url = GITHUB_URL
 
         # Groups list
         row = layout.row()

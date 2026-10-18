@@ -1,9 +1,9 @@
 bl_info = {
     "name": "Multi Fbx Exporter",
     "author": "Lazy Onigiri / bTro (Updated from original by nekorushi)",
-    "version": (1, 0, 3),
+    "version": (1, 0, 4),
     "blender": (4, 5, 4),
-    "location": "View3D > Sidebar > FBX",
+    "location": "View3D > Sidebar > Lazy Onigiri",
     "description": "Export selected objects into separate FBX files using presets.",
     "warning": "",
     "category": "Import-Export",
@@ -13,6 +13,7 @@ import bpy
 import os
 
 ADDON_VERSION = ".".join(str(number) for number in bl_info["version"])
+GITHUB_URL = "https://github.com/beetron/blender-addons"
 
 def find_fbx_presets(self, context):
     items = [("NONE", "None (Default Settings)", "Do not apply any saved preset configuration")]
@@ -179,7 +180,7 @@ class OBJECT_OT_BatchFbxExport(bpy.types.Operator):
 class VIEW3D_PT_MultiFbxExporterPanel(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'FBX'  
+    bl_category = 'Lazy Onigiri'  
     bl_label = "Multi Fbx Exporter"
 
     def draw_header(self, context):
@@ -195,6 +196,7 @@ class VIEW3D_PT_MultiFbxExporterPanel(bpy.types.Panel):
         column = header_box.column(align=True)
         column.label(text=f"Multi Fbx Exporter (v.{ADDON_VERSION})", icon='EXPORT')
         column.label(text="by Lazy Onigiri / bTro", icon='USER')
+        header_box.operator("wm.url_open", text="GitHub", icon='URL').url = GITHUB_URL
 
         # Properties interface
         main_column = layout.column(align=True)
